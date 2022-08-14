@@ -10,12 +10,12 @@ export const useDialog = <T extends any = void, A extends any[] = []>(builder: D
 
     const open = useCallback((...args: A) => {
         setIsOpen(true);
+        setArgs(args);
         
-        return new Promise<T>(resolve => { 
-            setArgs(args);
-            setResolve((value: T) => { 
+        return new Promise<T>(resolve => {
+            setResolve(() => (value: T) => { 
                 resolve(value);
-                setIsOpen(true);
+                setIsOpen(false);
             });
         });
     }, [setIsOpen, setResolve]);
